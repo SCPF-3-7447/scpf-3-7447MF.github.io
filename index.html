@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>D-MAF // INTERNAL TERMINAL</title>
+<title>D-MAF // TERMINAL 01</title>
 
 <style>
+
 /* =========================================================
    D-MAF TERMINAL
    Department of Mythology and Folkloristics
@@ -26,452 +29,711 @@ body {
 }
 
 body {
+
     background: #020402;
+
     color: #9cff9c;
-    font-family: "Courier New", Courier, monospace;
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
     overflow: hidden;
+
 }
 
-/* CRT SCREEN */
+
+/* CRT SCANLINES */
 
 body::before {
+
     content: "";
+
     position: fixed;
+
     inset: 0;
+
     pointer-events: none;
 
     background:
+
         repeating-linear-gradient(
             to bottom,
-            rgba(0,0,0,0) 0px,
-            rgba(0,0,0,0) 3px,
-            rgba(0,0,0,0.20) 4px
+            transparent 0px,
+            transparent 3px,
+            rgba(0,0,0,0.18) 4px
         );
 
     z-index: 100;
+
 }
 
+
+/* CRT VIGNETTE */
+
 body::after {
+
     content: "";
+
     position: fixed;
+
     inset: 0;
+
     pointer-events: none;
 
     box-shadow:
-        inset 0 0 120px rgba(0,0,0,0.85);
+        inset 0 0 120px rgba(0,0,0,0.9);
 
     z-index: 101;
+
 }
 
-#app {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.terminal {
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
+#terminal {
+
     width: 94vw;
     height: 92vh;
+
     max-width: 1400px;
 
-    border: 1px solid #315b31;
+    margin: auto;
 
-    background:
-        radial-gradient(
-            ellipse at center,
-            #071007 0%,
-            #030703 70%,
-            #010201 100%
-        );
+    position: relative;
 
-    box-shadow:
-        0 0 35px rgba(0,255,80,0.08),
-        inset 0 0 80px rgba(0,255,80,0.025);
+    top: 4vh;
 
     display: flex;
     flex-direction: column;
 
-    position: relative;
+    border: 1px solid #315b31;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            #081108 0%,
+            #030703 75%,
+            #010201 100%
+        );
+
+    box-shadow:
+
+        0 0 30px rgba(0,255,80,0.08),
+
+        inset 0 0 70px
+        rgba(0,255,80,0.03);
+
 }
 
-/* HEADER */
 
-.header {
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+
     border-bottom: 1px solid #315b31;
-    padding: 18px 22px;
+
+    padding: 17px 20px;
+
 }
 
 .department {
-    font-size: clamp(15px, 2vw, 23px);
+
+    font-size: clamp(14px, 2vw, 23px);
+
     font-weight: bold;
+
     letter-spacing: 3px;
+
 }
 
 .subtitle {
+
     color: #557555;
+
     font-size: 11px;
+
     letter-spacing: 2px;
-    margin-top: 6px;
+
+    margin-top: 5px;
+
 }
 
-.header-right {
+.terminal-info {
+
     float: right;
+
     text-align: right;
-    color: #587758;
-    font-size: 11px;
+
+    color: #557555;
+
+    font-size: 10px;
+
 }
 
-/* CONTENT */
 
-.content {
+/* =========================================================
+   BODY
+   ========================================================= */
+
+.body {
+
     flex: 1;
+
     display: flex;
+
     min-height: 0;
+
 }
 
-/* SIDEBAR */
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
 .sidebar {
-    width: 235px;
+
+    width: 225px;
+
     border-right: 1px solid #315b31;
-    padding: 18px 12px;
+
+    padding: 16px 10px;
+
 }
 
-.nav-title {
+.sidebar-title {
+
     color: #557555;
-    font-size: 11px;
+
+    font-size: 10px;
+
     letter-spacing: 2px;
+
     margin-bottom: 12px;
+
 }
 
-.nav-button {
+.nav {
+
     width: 100%;
-    text-align: left;
 
-    padding: 11px 12px;
-    margin-bottom: 6px;
+    padding: 11px;
 
-    color: #83c983;
+    margin-bottom: 5px;
+
     background: transparent;
 
     border: 1px solid transparent;
 
+    color: #83c983;
+
     font-family: inherit;
+
+    text-align: left;
+
     cursor: pointer;
 
-    transition: 0.15s;
 }
 
-.nav-button:hover {
-    border: 1px solid #315b31;
+.nav:hover {
+
+    border-color: #315b31;
+
     background: rgba(60,140,60,0.08);
+
     color: #c5ffc5;
+
 }
 
-.nav-button.active {
-    border: 1px solid #487748;
+.nav.active {
+
+    border-color: #487748;
+
     background: rgba(60,140,60,0.12);
+
     color: #d0ffd0;
+
 }
 
-.nav-button::before {
+.nav::before {
+
     content: "> ";
+
     color: #527052;
+
 }
 
-/* MAIN */
 
-.main {
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+
     flex: 1;
+
     padding: 22px;
+
     overflow-y: auto;
+
 }
 
 .page {
+
     display: none;
+
 }
 
 .page.active {
+
     display: block;
+
 }
 
 .page-title {
-    font-size: 20px;
+
     color: #c5ffc5;
+
+    font-size: 20px;
+
     letter-spacing: 2px;
+
     margin-bottom: 5px;
+
 }
 
 .page-subtitle {
+
     color: #527052;
-    font-size: 11px;
-    margin-bottom: 25px;
+
+    font-size: 10px;
+
+    margin-bottom: 22px;
+
 }
 
-/* PANELS */
+
+/* =========================================================
+   PANELS
+   ========================================================= */
 
 .panel {
+
     border: 1px solid #294d29;
-    margin-bottom: 16px;
+
     padding: 16px;
 
+    margin-bottom: 15px;
+
     background: rgba(20,50,20,0.08);
+
 }
 
 .panel-title {
+
     color: #c5ffc5;
+
     border-bottom: 1px solid #294d29;
+
     padding-bottom: 8px;
+
     margin-bottom: 12px;
+
 }
 
-.info-grid {
+.grid {
+
     display: grid;
+
     grid-template-columns: 180px 1fr;
+
     gap: 7px;
+
 }
 
 .label {
+
     color: #557555;
+
 }
 
 .value {
+
     color: #a8e8a8;
+
 }
 
-/* CASE CARDS */
+
+/* =========================================================
+   CASE FILES
+   ========================================================= */
 
 .case {
+
     border: 1px solid #294d29;
+
     padding: 15px;
+
     margin-bottom: 12px;
+
     cursor: pointer;
 
     transition: 0.15s;
+
 }
 
 .case:hover {
+
     border-color: #659c65;
+
     background: rgba(70,140,70,0.08);
+
 }
 
-.case-id {
+.case-number {
+
     color: #c5ffc5;
+
     font-size: 17px;
+
 }
 
 .case-name {
+
     color: #77b977;
+
     margin-top: 4px;
+
 }
 
-.case-meta {
+.case-info {
+
     color: #557555;
-    font-size: 11px;
+
+    font-size: 10px;
+
     margin-top: 8px;
+
 }
 
-/* REPORTS */
+.joint {
+
+    border-color: #8c7335;
+
+}
+
+.joint:hover {
+
+    border-color: #d1ad52;
+
+}
+
+
+/* =========================================================
+   REPORTS
+   ========================================================= */
 
 .report {
+
     border-left: 2px solid #315b31;
+
     padding: 12px 15px;
-    margin-bottom: 15px;
+
+    margin-bottom: 13px;
+
     cursor: pointer;
+
 }
 
 .report:hover {
+
     background: rgba(70,140,70,0.08);
+
 }
 
-/* COLLABORATIONS */
+
+/* =========================================================
+   COLLABORATION
+   ========================================================= */
 
 .collab {
+
     border: 1px dashed #315b31;
+
     padding: 15px;
-    margin-bottom: 14px;
+
+    margin-bottom: 13px;
+
 }
 
-.collab-dept {
+.collab-title {
+
     color: #c5ffc5;
+
 }
 
 .collab-status {
+
     float: right;
-    color: #8bbd8b;
-    font-size: 11px;
+
+    color: #719971;
+
+    font-size: 10px;
+
 }
 
-/* LINKS */
 
-a {
-    color: #9cff9c;
-    text-decoration: none;
-}
-
-a:hover {
-    color: white;
-    text-decoration: underline;
-}
-
-/* WARNING */
+/* =========================================================
+   SPECIAL TEXT
+   ========================================================= */
 
 .warning {
-    color: #d9a94e;
+
+    color: #d7aa4d;
+
+}
+
+.red {
+
+    color: #ff5555;
+
+}
+
+.dim {
+
+    color: #527052;
+
 }
 
 .redacted {
+
     color: #222;
+
     background: #222;
+
     padding: 0 5px;
+
 }
 
 .redacted:hover {
+
     color: #9cff9c;
+
     background: transparent;
+
 }
 
-/* FOOTER */
+a {
 
-.footer {
+    color: #9cff9c;
+
+    text-decoration: none;
+
+}
+
+a:hover {
+
+    color: white;
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+
     border-top: 1px solid #315b31;
-    padding: 8px 15px;
+
+    padding: 7px 12px;
 
     color: #486248;
-    font-size: 10px;
+
+    font-size: 9px;
 
     display: flex;
+
     justify-content: space-between;
+
 }
 
-/* MOBILE */
 
-@media(max-width: 750px) {
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-    .terminal {
+@media(max-width:700px) {
+
+    #terminal {
+
         width: 100vw;
+
         height: 100vh;
+
+        top: 0;
+
         border: none;
+
     }
 
     .sidebar {
-        width: 175px;
+
+        width: 150px;
+
     }
 
-    .header-right {
+    .terminal-info {
+
         display: none;
+
     }
 
-    .info-grid {
+    .grid {
+
         grid-template-columns: 1fr;
-    }
-}
 
-@media(max-width: 560px) {
-
-    .sidebar {
-        width: 130px;
     }
 
-    .nav-button {
-        font-size: 10px;
-        padding: 10px 5px;
-    }
-
-    .main {
-        padding: 14px;
-    }
-
-    .department {
-        font-size: 13px;
-    }
 }
 
 </style>
+
 </head>
 
 
 <body>
 
-<div id="app">
 
-<div class="terminal">
+<div id="terminal">
+
 
 <!-- =====================================================
      HEADER
      ===================================================== -->
 
-<div class="header">
+<header>
 
-    <div class="header-right">
+    <div class="terminal-info">
+
         TERMINAL: D-MAF-SEC-03<br>
-        NODE STATUS: ONLINE
+
+        NODE: ONLINE<br>
+
+        SESSION: AUTHORIZED
+
     </div>
+
 
     <div class="department">
+
         DEPARTMENT OF MYTHOLOGY AND FOLKLORISTICS
+
     </div>
+
 
     <div class="subtitle">
-        INTERNAL ARCHIVE // SECURE FOUNDATION NETWORK
+
+        INTERNAL FOUNDATION ARCHIVE
+
     </div>
 
-</div>
+</header>
 
 
-<div class="content">
+
+<div class="body">
 
 
 <!-- =====================================================
      SIDEBAR
      ===================================================== -->
 
-<div class="sidebar">
+<nav class="sidebar">
 
-    <div class="nav-title">
+    <div class="sidebar-title">
+
         ARCHIVE DIRECTORY
+
     </div>
 
-    <button class="nav-button active"
-        onclick="showPage('home', this)">
+
+    <button
+        class="nav active"
+        onclick="page('home', this)"
+    >
+
         TERMINAL HOME
+
     </button>
 
-    <button class="nav-button"
-        onclick="showPage('cases', this)">
+
+    <button
+        class="nav"
+        onclick="page('cryptids', this)"
+    >
+
         CRYPTID INDEX
+
     </button>
 
-    <button class="nav-button"
-        onclick="showPage('reports', this)">
+
+    <button
+        class="nav"
+        onclick="page('reports', this)"
+    >
+
         FIELD REPORTS
+
     </button>
 
-    <button class="nav-button"
-        onclick="showPage('collabs', this)">
+
+    <button
+        class="nav"
+        onclick="page('collab', this)"
+    >
+
         COLLABORATIONS
+
     </button>
 
-    <button class="nav-button"
-        onclick="showPage('personnel', this)">
+
+    <button
+        class="nav"
+        onclick="page('personnel', this)"
+    >
+
         PERSONNEL
+
     </button>
 
-    <button class="nav-button"
-        onclick="showPage('restricted', this)">
+
+    <button
+        class="nav"
+        onclick="page('restricted', this)"
+    >
+
         RESTRICTED
+
     </button>
 
-</div>
+</nav>
+
 
 
 <!-- =====================================================
-     MAIN CONTENT
+     MAIN
      ===================================================== -->
 
-<div class="main">
+<main>
 
 
 <!-- =====================================================
@@ -481,39 +743,69 @@ a:hover {
 <section id="home" class="page active">
 
     <div class="page-title">
+
         SECURE TERMINAL
+
     </div>
 
     <div class="page-subtitle">
+
         D-MAF // SECURITY ACCESS NODE
+
     </div>
 
 
     <div class="panel">
 
         <div class="panel-title">
+
             LOGGED-IN PERSONNEL
+
         </div>
 
-        <div class="info-grid">
+
+        <div class="grid">
 
             <div class="label">NAME</div>
-            <div class="value">MICHAEL</div>
+
+            <div class="value">
+                MICHAEL
+            </div>
+
+
+            <div class="label">POSITION</div>
+
+            <div class="value">
+                SECURITY OFFICER
+            </div>
+
 
             <div class="label">DIVISION</div>
-            <div class="value">SECURITY</div>
+
+            <div class="value">
+                D-MAF SECURITY
+            </div>
+
 
             <div class="label">CLEARANCE</div>
-            <div class="value">LEVEL 3</div>
+
+            <div class="value">
+                LEVEL 3
+            </div>
+
 
             <div class="label">STATUS</div>
-            <div class="value">ACTIVE</div>
+
+            <div class="value">
+                ACTIVE
+            </div>
+
 
             <div class="label">TERMINAL</div>
-            <div class="value">D-MAF-SEC-03</div>
 
-            <div class="label">LAST CHECK-IN</div>
-            <div class="value">21:43:17</div>
+            <div class="value">
+                D-MAF-SEC-03
+            </div>
 
         </div>
 
@@ -523,19 +815,27 @@ a:hover {
     <div class="panel">
 
         <div class="panel-title">
+
             DEPARTMENT NOTICE
+
         </div>
 
+
         <p>
-            This terminal provides access to Department of
-            Mythology and Folkloristics records concerning
-            anomalous entities associated with folklore,
-            cryptozoology, mythology, and oral tradition.
+
+            This terminal provides access to records
+            concerning anomalous entities associated with
+            mythology, folklore, cryptozoology, and
+            regional oral traditions.
+
         </p>
+
 
         <p class="warning">
-            NOTICE: Foundation classification supersedes
-            conventional taxonomic designation.
+
+            FOUNDATION CLASSIFICATION OVERRIDES
+            CONVENTIONAL TAXONOMIC DESIGNATION.
+
         </p>
 
     </div>
@@ -544,122 +844,196 @@ a:hover {
     <div class="panel">
 
         <div class="panel-title">
+
             SYSTEM MESSAGE
+
         </div>
 
+
         <p>
+
             Welcome, Michael.
+
         </p>
 
+
         <p class="dim">
-            Remember: absence of evidence is not evidence
-            of absence.
+
+            Your current assignment includes
+            cryptid-related anomalies.
+
+        </p>
+
+
+        <p class="dim">
+
+            Remember:
+
+            <br><br>
+
+            <em>
+            Not everything that has a name
+            has a known origin.
+            </em>
+
         </p>
 
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
      CRYPTID INDEX
      ===================================================== -->
 
-<section id="cases" class="page">
+<section id="cryptids" class="page">
 
     <div class="page-title">
+
         CRYPTID INDEX
+
     </div>
+
 
     <div class="page-subtitle">
-        VERIFIED FOUNDATION RECORDS // D-MAF RELEVANCE FILTER
+
+        VERIFIED FOUNDATION RECORDS //
+        D-MAF RELEVANCE FILTER
+
     </div>
 
 
-    <!-- SCP-1000 -->
 
-    <div class="case"
-         onclick="openCase('1000')">
+    <!-- BIGFOOT -->
 
-        <div class="case-id">
+    <div
+        class="case"
+        onclick="caseFile('1000')"
+    >
+
+        <div class="case-number">
+
             SCP-1000
+
         </div>
+
 
         <div class="case-name">
-            BIGFOOT
+
+            BIGFOOT / SASQUATCH
+
         </div>
 
-        <div class="case-meta">
+
+        <div class="case-info">
+
             OBJECT CLASS: KETER //
             D-MAF PRIORITY: EXTREME
+
         </div>
 
     </div>
 
 
-    <!-- SCP-5571 -->
 
-    <div class="case"
-         onclick="openCase('5571')">
+    <!-- VAMPIRES -->
 
-        <div class="case-id">
-            SCP-5571
+    <div
+        class="case"
+        onclick="caseFile('9302')"
+    >
+
+        <div class="case-number">
+
+            SCP-9302
+
         </div>
+
 
         <div class="case-name">
-            THE BIGFOOT OF EASTERN TENNESSEE
+
+            VAMPIRES OF ESCHAR
+
         </div>
 
-        <div class="case-meta">
-            D-MAF PRIORITY: HIGH //
-            REGIONAL FOLKLORE
-        </div>
 
-    </div>
+        <div class="case-info">
 
-
-    <!-- SCP-9192 -->
-
-    <div class="case"
-         onclick="openCase('9192')">
-
-        <div class="case-id">
-            SCP-9192
-        </div>
-
-        <div class="case-name">
-            THE SQUONK
-        </div>
-
-        <div class="case-meta">
-            STATUS: PROVISIONAL //
-            D-MAF PRIORITY: LOW
-        </div>
-
-    </div>
-
-
-    <!-- SCP-9545 -->
-
-    <div class="case"
-         onclick="openCase('9545')">
-
-        <div class="case-id">
-            SCP-9545
-        </div>
-
-        <div class="case-name">
-            THE MAN IN BLACK
-        </div>
-
-        <div class="case-meta">
             OBJECT CLASS: UNCONTAINED //
             D-MAF PRIORITY: HIGH
+
+        </div>
+
+    </div>
+
+
+
+    <!-- WEREWOLF -->
+
+    <div
+        class="case"
+        onclick="caseFile('1540')"
+    >
+
+        <div class="case-number">
+
+            SCP-1540
+
+        </div>
+
+
+        <div class="case-name">
+
+            WEREWOLF TRANSFORMATION ANOMALY
+
+        </div>
+
+
+        <div class="case-info">
+
+            OBJECT CLASS: EUCLID //
+            D-MAF PRIORITY: HIGH
+
+        </div>
+
+    </div>
+
+
+
+    <!-- KUMIHO -->
+
+    <div
+        class="case joint"
+        onclick="caseFile('953')"
+    >
+
+        <div class="case-number">
+
+            SCP-953
+
+        </div>
+
+
+        <div class="case-name">
+
+            KUMIHO
+
+        </div>
+
+
+        <div class="case-info">
+
+            OBJECT CLASS: KETER //
+            JOINT CASE: MICHAEL / GARRETT
+
         </div>
 
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -669,16 +1043,24 @@ a:hover {
 <section id="reports" class="page">
 
     <div class="page-title">
+
         FIELD REPORTS
+
     </div>
+
 
     <div class="page-subtitle">
-        D-MAF PERSONNEL DOCUMENTATION
+
+        D-MAF SECURITY AND FIELD OPERATIONS
+
     </div>
 
 
-    <div class="report"
-         onclick="openReport('1000')">
+
+    <div
+        class="report"
+        onclick="report('1000')"
+    >
 
         <strong>
             FIELD REPORT 1000-A
@@ -687,53 +1069,82 @@ a:hover {
         <br>
 
         <span class="dim">
-            Pacific Northwest // Unconfirmed Visual Contact
+            NORTHWESTERN UNITED STATES //
+            POSSIBLE SCP-1000 ACTIVITY
         </span>
 
     </div>
 
 
-    <div class="report"
-         onclick="openReport('5571')">
+
+    <div
+        class="report"
+        onclick="report('9302')"
+    >
 
         <strong>
-            FIELD REPORT 5571-C
+            FIELD REPORT 9302-B
         </strong>
 
         <br>
 
         <span class="dim">
-            Eastern Tennessee // Local Folklore Survey
+            TENNESSEE //
+            ESCHAR SURVEY
         </span>
 
     </div>
 
 
-    <div class="report"
-         onclick="openReport('9192')">
+
+    <div
+        class="report"
+        onclick="report('1540')"
+    >
 
         <strong>
-            FIELD REPORT 9192-P
+            FIELD REPORT 1540-C
         </strong>
 
         <br>
 
         <span class="dim">
-            Pennsylvania // Cryptid Investigation Proposal
+            UTAH //
+            OCCULT TRANSFORMATION CASE
         </span>
 
     </div>
 
 
-    <div class="report">
+
+    <div
+        class="report"
+        onclick="report('953')"
+    >
 
         <strong>
-            FIELD REPORT 10/31
+            JOINT REPORT 953-MG
         </strong>
 
         <br>
 
         <span class="warning">
+            MICHAEL / GARRETT
+        </span>
+
+    </div>
+
+
+
+    <div class="report">
+
+        <strong>
+            INCIDENT REPORT 10/31
+        </strong>
+
+        <br>
+
+        <span class="red">
             ACCESS RESTRICTED
         </span>
 
@@ -742,93 +1153,142 @@ a:hover {
 </section>
 
 
+
 <!-- =====================================================
      COLLABORATIONS
      ===================================================== -->
 
-<section id="collabs" class="page">
+<section id="collab" class="page">
 
     <div class="page-title">
+
         INTERDEPARTMENTAL COLLABORATIONS
+
     </div>
+
 
     <div class="page-subtitle">
-        ACTIVE AND HISTORICAL DEPARTMENTAL COOPERATION
+
+        FOUNDATION DEPARTMENT COOPERATION
+
     </div>
+
 
 
     <div class="collab">
 
         <span class="collab-status">
+
             ACTIVE
+
         </span>
 
-        <div class="collab-dept">
-            D-MAF × DEPARTMENT OF ANTHROPOLOGY
+
+        <div class="collab-title">
+
+            D-MAF × ANTHROPOLOGY DIVISION
+
         </div>
 
+
         <p class="dim">
-            Joint investigation of anomalous hominid
-            populations and disputed human-adjacent species.
+
+            Joint analysis of anomalous hominid
+            populations and human-adjacent species.
+
         </p>
 
     </div>
 
 
+
     <div class="collab">
 
         <span class="collab-status">
+
             ACTIVE
+
         </span>
 
-        <div class="collab-dept">
+
+        <div class="collab-title">
+
             D-MAF × MEMETICS DIVISION
+
         </div>
 
+
         <p class="dim">
-            Monitoring cultural transmission of anomalous
-            folklore and cryptid sightings.
+
+            Monitoring cultural transmission of
+            anomalous folklore and cryptid sightings.
+
         </p>
 
     </div>
+
 
 
     <div class="collab">
 
         <span class="collab-status">
-            PENDING
+
+            ACTIVE
+
         </span>
 
-        <div class="collab-dept">
+
+        <div class="collab-title">
+
             D-MAF × ARCHAEOLOGY DIVISION
+
         </div>
 
+
         <p class="dim">
-            Historical investigation concerning anomalous
-            civilizations associated with SCP-1000.
+
+            Historical investigation related to
+            SCP-1000 and prehistoric anomalous
+            civilizations.
+
         </p>
 
     </div>
+
 
 
     <div class="collab">
 
         <span class="collab-status warning">
-            REVIEW REQUIRED
+
+            JOINT CASE
+
         </span>
 
-        <div class="collab-dept">
+
+        <div class="collab-title">
+
             D-MAF × SECURITY DIVISION
+
         </div>
 
+
         <p class="dim">
-            Personnel safety protocols regarding direct
-            contact with unidentified cryptids.
+
+            SCP-953.
+
+            <br><br>
+
+            Assigned personnel:
+
+            MICHAEL / GARRETT
+
         </p>
 
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -838,67 +1298,81 @@ a:hover {
 <section id="personnel" class="page">
 
     <div class="page-title">
+
         PERSONNEL RECORDS
+
     </div>
 
+
     <div class="page-subtitle">
-        AUTHORIZED PERSONNEL ONLY
+
+        SECURITY DIVISION
+
     </div>
+
 
 
     <div class="panel">
 
         <div class="panel-title">
-            SECURITY PERSONNEL
+
+            MICHAEL
+
         </div>
 
-        <div class="info-grid">
 
-            <div class="label">NAME</div>
-            <div class="value">MICHAEL</div>
+        <div class="grid">
 
-            <div class="label">POSITION</div>
-            <div class="value">
-                D-MAF SECURITY OFFICER
+            <div class="label">
+                POSITION
             </div>
 
-            <div class="label">CLEARANCE</div>
-            <div class="value">LEVEL 3</div>
+            <div class="value">
+                SECURITY OFFICER
+            </div>
 
-            <div class="label">CURRENT ASSIGNMENT</div>
+
+            <div class="label">
+                DEPARTMENT
+            </div>
+
+            <div class="value">
+                MYTHOLOGY AND FOLKLORISTICS
+            </div>
+
+
+            <div class="label">
+                CLEARANCE
+            </div>
+
+            <div class="value">
+                LEVEL 3
+            </div>
+
+
+            <div class="label">
+                CURRENT ASSIGNMENT
+            </div>
+
             <div class="value">
                 D-MAF-SEC-03
             </div>
 
-            <div class="label">PSYCHOLOGICAL STATUS</div>
+
+            <div class="label">
+                STATUS
+            </div>
+
             <div class="value">
-                NOMINAL
+                ACTIVE
             </div>
 
         </div>
 
     </div>
 
-
-    <div class="panel">
-
-        <div class="panel-title">
-            SECURITY NOTICE
-        </div>
-
-        <p class="warning">
-            Personnel are reminded that cryptid
-            investigations are not recreational activities.
-        </p>
-
-        <p class="dim">
-            Do not attempt to establish contact with
-            unidentified entities without authorization.
-        </p>
-
-    </div>
-
 </section>
+
 
 
 <!-- =====================================================
@@ -908,222 +1382,253 @@ a:hover {
 <section id="restricted" class="page">
 
     <div class="page-title">
+
         RESTRICTED ARCHIVE
+
     </div>
+
 
     <div class="page-subtitle">
-        CLEARANCE VERIFICATION REQUIRED
+
+        CLEARANCE VERIFICATION
+
     </div>
+
 
 
     <div class="panel">
 
         <div class="panel-title">
+
             ACCESS DENIED
+
         </div>
+
 
         <p class="red">
-            YOUR CURRENT CLEARANCE DOES NOT AUTHORIZE
-            ACCESS TO THIS MATERIAL.
+
+            YOUR CURRENT CLEARANCE DOES NOT
+            AUTHORIZE ACCESS TO THIS MATERIAL.
+
         </p>
 
+
         <p>
-            Required clearance:
-            <span class="redacted">LEVEL 4</span>
+
+            REQUIRED CLEARANCE:
+
+            <span class="redacted">
+                LEVEL 4
+            </span>
+
         </p>
+
 
         <p class="dim">
-            If you believe this restriction is in error,
-            contact your supervising researcher.
-        </p>
 
-    </div>
+            Some records are restricted due to
+            operational security concerns.
 
-
-    <div class="panel">
-
-        <div class="panel-title">
-            LAST FAILED ACCESS ATTEMPT
-        </div>
-
-        <p>
-            USER: MICHAEL
-        </p>
-
-        <p>
-            TERMINAL: D-MAF-SEC-03
-        </p>
-
-        <p>
-            RESULT:
-            <span class="red">DENIED</span>
         </p>
 
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
      DYNAMIC CASE PAGE
      ===================================================== -->
 
-<section id="case-view" class="page">
+<section id="case-page" class="page">
 
     <div id="case-content"></div>
 
 </section>
 
 
+
 <!-- =====================================================
      DYNAMIC REPORT PAGE
      ===================================================== -->
 
-<section id="report-view" class="page">
+<section id="report-page" class="page">
 
     <div id="report-content"></div>
 
 </section>
 
 
-</div>
+</main>
 
 </div>
 
 
-<!-- FOOTER -->
 
-<div class="footer">
+<footer>
 
     <span>
         D-MAF INTERNAL ARCHIVE
     </span>
 
     <span>
-        UNAUTHORIZED ACCESS WILL BE DOCUMENTED
+        TERMINAL 01 // MICHAEL
     </span>
 
-</div>
+</footer>
+
 
 </div>
 
-</div>
 
 
 <script>
 
+
 /* =========================================================
-   PAGE NAVIGATION
+   PAGE SWITCHING
    ========================================================= */
 
-function showPage(page, button) {
+function page(id, button) {
 
-    document.querySelectorAll(".page")
-        .forEach(p => p.classList.remove("active"));
+    document
+        .querySelectorAll(".page")
+        .forEach(p => {
 
-    document.getElementById(page)
+            p.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(id)
         .classList.add("active");
 
 
-    document.querySelectorAll(".nav-button")
-        .forEach(b => b.classList.remove("active"));
+    document
+        .querySelectorAll(".nav")
+        .forEach(b => {
+
+            b.classList.remove("active");
+
+        });
+
 
     if (button) {
+
         button.classList.add("active");
+
     }
+
 }
 
 
 /* =========================================================
-   CASE FILES
+   CASE DATABASE
    ========================================================= */
 
 const cases = {
+
 
     "1000": {
 
         number: "SCP-1000",
 
-        name: "BIGFOOT",
+        name: "BIGFOOT / SASQUATCH",
 
-        class: "KETER",
+        objectClass: "KETER",
 
         priority: "EXTREME",
 
         summary:
-        "An anomalous species of nocturnal ape associated with the modern Bigfoot and Sasquatch traditions.",
+        "SCP-1000 is an anomalous species of nocturnal hominid commonly associated with the modern Bigfoot and Sasquatch legends.",
 
-        relevance:
-        "D-MAF maintains an ongoing interest in SCP-1000 due to its extensive presence within North American folklore and the historical suppression of evidence concerning the species.",
+        dmaf:
+        "D-MAF maintains an active interest in SCP-1000 due to its extensive presence within North American folklore and the historical suppression of evidence concerning the species.",
 
-        link:
+        note:
+        "Personnel are reminded that SCP-1000 is not a recreational cryptid investigation.",
+
+        url:
         "https://scp-wiki.wikidot.com/scp-1000"
 
     },
 
 
-    "5571": {
+    "9302": {
 
-        number: "SCP-5571",
+        number: "SCP-9302",
 
-        name: "BIGFOOT OF EASTERN TENNESSEE",
+        name: "VAMPIRES OF ESCHAR",
 
-        class: "SEE FOUNDATION RECORD",
-
-        priority: "HIGH",
-
-        summary:
-        "A cryptid-focused anomaly involving reports and investigation of Bigfoot entities within the Southern Appalachian region.",
-
-        relevance:
-        "D-MAF considers SCP-5571 significant due to its intersection with regional folklore, oral history, and modern cryptozoological traditions.",
-
-        link:
-        "https://scp-wiki.wikidot.com/scp-5571"
-
-    },
-
-
-    "9192": {
-
-        number: "SCP-9192",
-
-        name: "THE SQUONK",
-
-        class: "PROVISIONAL",
-
-        priority: "LOW",
-
-        summary:
-        "A proposed anomaly corresponding to the Squonk, a creature originating in Pennsylvania folklore.",
-
-        relevance:
-        "The case is of interest to D-MAF as an example of a folkloric entity whose reported existence remains uncertain.",
-
-        link:
-        "https://scp-wiki.wikidot.com/scp-9192"
-
-    },
-
-
-    "9545": {
-
-        number: "SCP-9545",
-
-        name: "THE MAN IN BLACK",
-
-        class: "UNCONTAINED",
+        objectClass: "UNCONTAINED",
 
         priority: "HIGH",
 
         summary:
-        "A polymorphic entity associated with modern cryptid and conspiracy folklore.",
+        "SCP-9302 refers to the active vampire population of Eschar, Tennessee.",
 
-        relevance:
-        "D-MAF monitors SCP-9545 due to its overlap with the folkloric archetype of mysterious visitors, supernatural investigators, and so-called Men in Black.",
+        dmaf:
+        "D-MAF involvement concerns the intersection of anomalous vampirism, local folklore, religious practice, and the long-term cultural integration of anomalous individuals within an isolated community.",
 
-        link:
-        "https://scp-wiki.wikidot.com/scp-9545"
+        note:
+        "Southern United States field personnel are advised to treat confirmed reports of vampirism as potentially anomalous until proven otherwise.",
+
+        url:
+        "https://scp-wiki.wikidot.com/scp-9302"
+
+    },
+
+
+    "1540": {
+
+        number: "SCP-1540",
+
+        name: "WEREWOLF TRANSFORMATION ANOMALY",
+
+        objectClass: "EUCLID",
+
+        priority: "HIGH",
+
+        summary:
+        "SCP-1540 is a humanoid anomaly associated with a recurring transformation cycle. Foundation records indicate that its original subject participated in an occult ritual intended to create a werewolf.",
+
+        dmaf:
+        "D-MAF maintains the case because of its direct connection to modern werewolf folklore, occult ritual practice, and attempts to artificially reproduce folkloric transformations.",
+
+        note:
+        "Classification reminder: SCP-1540 is associated with werewolf transformation lore. It should not be documented as a conventional lycanthrope.",
+
+        url:
+        "https://scp-wiki.wikidot.com/scp-1540"
+
+    },
+
+
+    "953": {
+
+        number: "SCP-953",
+
+        name: "KUMIHO",
+
+        objectClass: "KETER",
+
+        priority: "CRITICAL",
+
+        summary:
+        "SCP-953 is a polymorphic anomalous entity identified in Foundation records as a Kumiho.",
+
+        dmaf:
+        "This file has been designated a joint D-MAF security case. Michael and Garrett are the assigned personnel for this investigation.",
+
+        note:
+        "FOUNDATION WARNING: Personnel are specifically instructed to refer to SCP-953 as a Kumiho and not a Kitsune.",
+
+        joint: true,
+
+        url:
+        "https://scp-wiki.wikidot.com/scp-953"
 
     }
 
@@ -1134,41 +1639,57 @@ const cases = {
    OPEN CASE
    ========================================================= */
 
-function openCase(id) {
+function caseFile(id) {
+
 
     const c = cases[id];
 
-    if (!c) return;
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p => {
+
+            p.classList.remove("active");
+
+        });
 
 
-    document.querySelectorAll(".page")
-        .forEach(p => p.classList.remove("active"));
+    document
+        .getElementById("case-page")
+        .classList.add("active");
 
 
-    const page =
-        document.getElementById("case-view");
+    document
+        .getElementById("case-content")
+        .innerHTML = `
 
-    page.classList.add("active");
-
-
-    document.getElementById("case-content").innerHTML = `
 
         <div class="page-title">
+
             ${c.number}
+
         </div>
 
+
         <div class="page-subtitle">
+
             D-MAF INTERNAL CASE ASSESSMENT
+
         </div>
+
 
 
         <div class="panel">
 
             <div class="panel-title">
+
                 ${c.name}
+
             </div>
 
-            <div class="info-grid">
+
+            <div class="grid">
+
 
                 <div class="label">
                     FOUNDATION DESIGNATION
@@ -1184,7 +1705,7 @@ function openCase(id) {
                 </div>
 
                 <div class="value">
-                    ${c.class}
+                    ${c.objectClass}
                 </div>
 
 
@@ -1198,70 +1719,173 @@ function openCase(id) {
 
 
                 <div class="label">
-                    RECORD STATUS
+                    ASSIGNED PERSONNEL
                 </div>
 
                 <div class="value">
-                    VERIFIED FOUNDATION RECORD
+
+                    ${
+                        c.joint
+                        ? "MICHAEL / GARRETT"
+                        : "MICHAEL"
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                FOUNDATION SUMMARY
+
+            </div>
+
+
+            <p>
+
+                ${c.summary}
+
+            </p>
+
+        </div>
+
+
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                D-MAF ASSESSMENT
+
+            </div>
+
+
+            <p>
+
+                ${c.dmaf}
+
+            </p>
+
+
+            <p class="warning">
+
+                ${c.note}
+
+            </p>
+
+        </div>
+
+
+
+        ${
+            c.joint
+            ?
+
+            `
+
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    JOINT CASE DESIGNATION
+
+                </div>
+
+
+                <p>
+
+                    This case requires coordinated
+                    access between two D-MAF personnel.
+
+                </p>
+
+
+                <div class="grid">
+
+                    <div class="label">
+                        PERSONNEL A
+                    </div>
+
+                    <div class="value">
+                        MICHAEL
+                    </div>
+
+
+                    <div class="label">
+                        PERSONNEL B
+                    </div>
+
+                    <div class="value">
+                        GARRETT
+                    </div>
+
+
+                    <div class="label">
+                        CASE STATUS
+                    </div>
+
+                    <div class="value">
+                        ACTIVE
+                    </div>
+
                 </div>
 
             </div>
 
-        </div>
+            `
 
+            : ""
 
-        <div class="panel">
+        }
 
-            <div class="panel-title">
-                D-MAF SUMMARY
-            </div>
-
-            <p>
-                ${c.summary}
-            </p>
-
-        </div>
 
 
         <div class="panel">
 
             <div class="panel-title">
-                DEPARTMENT RELEVANCE
+
+                ORIGINAL FOUNDATION RECORD
+
             </div>
 
-            <p>
-                ${c.relevance}
-            </p>
 
-        </div>
+            <p class="dim">
 
-
-        <div class="panel">
-
-            <div class="panel-title">
-                FOUNDATION RECORD
-            </div>
-
-            <p>
-                The complete Foundation documentation is
+                The complete Foundation article is
                 available through the external archive.
+
             </p>
 
-            <p>
-                <a href="${c.link}"
-                   target="_blank"
-                   rel="noopener noreferrer">
 
-                    [ OPEN ORIGINAL SCP FILE ]
+            <p>
+
+                <a
+                    href="${c.url}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    [ OPEN SCP FOUNDATION FILE ]
 
                 </a>
+
             </p>
 
         </div>
 
 
-        <button class="nav-button"
-                onclick="showPage('cases')">
+
+        <button
+            class="nav"
+            onclick="page('cryptids')"
+        >
 
             &lt; RETURN TO CRYPTID INDEX
 
@@ -1276,13 +1900,20 @@ function openCase(id) {
    FIELD REPORTS
    ========================================================= */
 
-function openReport(id) {
-
-    document.querySelectorAll(".page")
-        .forEach(p => p.classList.remove("active"));
+function report(id) {
 
 
-    document.getElementById("report-view")
+    document
+        .querySelectorAll(".page")
+        .forEach(p => {
+
+            p.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById("report-page")
         .classList.add("active");
 
 
@@ -1291,31 +1922,47 @@ function openReport(id) {
 
     if (id === "1000") {
 
+
         content = `
 
         <div class="page-title">
+
             FIELD REPORT 1000-A
+
         </div>
 
+
         <div class="page-subtitle">
-            PACIFIC NORTHWEST // D-MAF FIELD OPERATIONS
+
+            NORTHWESTERN UNITED STATES //
+            D-MAF FIELD OPERATIONS
+
         </div>
 
 
         <div class="panel">
 
             <div class="panel-title">
-                INCIDENT SUMMARY
+
+                SUMMARY
+
             </div>
 
+
             <p>
-                D-MAF personnel were dispatched following
-                repeated reports of unusually large humanoid
-                tracks within a restricted forest region.
+
+                D-MAF personnel were dispatched
+                following multiple reports of unusually
+                large humanoid tracks within a remote
+                forest region.
+
             </p>
 
+
             <p class="dim">
+
                 No direct contact was authorized.
+
             </p>
 
         </div>
@@ -1324,14 +1971,19 @@ function openReport(id) {
         <div class="panel">
 
             <div class="panel-title">
-                FIELD NOTE // MICHAEL
+
+                SECURITY NOTE // MICHAEL
+
             </div>
 
+
             <p>
-                Security recommendation:
-                maintain distance from unidentified
-                hominid entities unless Foundation
-                containment personnel are present.
+
+                Maintain visual distance from any
+                suspected SCP-1000 instance.
+
+                Do not attempt pursuit.
+
             </p>
 
         </div>
@@ -1341,35 +1993,50 @@ function openReport(id) {
     }
 
 
-    else if (id === "5571") {
+    else if (id === "9302") {
+
 
         content = `
 
         <div class="page-title">
-            FIELD REPORT 5571-C
+
+            FIELD REPORT 9302-B
+
         </div>
+
 
         <div class="page-subtitle">
-            EASTERN TENNESSEE // FOLKLORE SURVEY
+
+            ESCHAR, TENNESSEE
+
         </div>
 
 
         <div class="panel">
 
             <div class="panel-title">
-                LOCAL TESTIMONY
+
+                D-MAF OBSERVATION
+
             </div>
 
+
             <p>
-                Multiple local accounts describe large,
-                intelligent, hairy humanoids inhabiting
-                wooded areas.
+
+                Local cultural practices surrounding
+                the anomalous population demonstrate
+                significant divergence from conventional
+                vampire folklore.
+
             </p>
 
-            <p class="dim">
-                Accounts display significant similarities
-                despite geographic separation between
-                witnesses.
+
+            <p class="warning">
+
+                Personnel are reminded that folklore
+                should not be assumed to constitute
+                reliable containment procedure.
+
             </p>
 
         </div>
@@ -1379,23 +2046,49 @@ function openReport(id) {
     }
 
 
-    else {
+    else if (id === "1540") {
+
 
         content = `
 
         <div class="page-title">
-            FIELD REPORT
+
+            FIELD REPORT 1540-C
+
         </div>
+
+
+        <div class="page-subtitle">
+
+            OCCULT TRANSFORMATION CASE
+
+        </div>
+
 
         <div class="panel">
 
             <div class="panel-title">
-                RECORD UNAVAILABLE
+
+                CASE SUMMARY
+
             </div>
 
-            <p class="red">
-                The requested report is not available
-                at this clearance level.
+
+            <p>
+
+                Foundation records indicate that
+                the original subject attempted to
+                perform a ritual intended to create
+                a werewolf.
+
+            </p>
+
+
+            <p class="dim">
+
+                D-MAF has been assigned to examine
+                the folkloric origins of the ritual.
+
             </p>
 
         </div>
@@ -1405,13 +2098,125 @@ function openReport(id) {
     }
 
 
-    document.getElementById("report-content").innerHTML =
-        content;
+    else if (id === "953") {
+
+
+        content = `
+
+        <div class="page-title">
+
+            JOINT REPORT 953-MG
+
+        </div>
+
+
+        <div class="page-subtitle">
+
+            MICHAEL / GARRETT
+
+        </div>
+
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                CASE STATUS
+
+            </div>
+
+
+            <div class="grid">
+
+
+                <div class="label">
+                    SUBJECT
+                </div>
+
+                <div class="value">
+                    SCP-953
+                </div>
+
+
+                <div class="label">
+                    TYPE
+                </div>
+
+                <div class="value">
+                    KUMIHO
+                </div>
+
+
+                <div class="label">
+                    PERSONNEL
+                </div>
+
+                <div class="value">
+                    MICHAEL / GARRETT
+                </div>
+
+
+                <div class="label">
+                    STATUS
+                </div>
+
+                <div class="warning">
+                    ACTIVE
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                SECURITY NOTICE
+
+            </div>
+
+
+            <p>
+
+                This report is shared between
+                two authorized personnel.
+
+            </p>
+
+
+            <p class="dim">
+
+                Individual personnel notes may not
+                be visible from all terminals.
+
+            </p>
+
+
+            <p class="warning">
+
+                Do not attempt to access another
+                investigator's private notes.
+
+            </p>
+
+        </div>
+
+        `;
+
+    }
+
+
+    document
+        .getElementById("report-content")
+        .innerHTML = content;
 
 }
 
 </script>
 
 </body>
+
 </html>
-```
